@@ -5,10 +5,19 @@ const API_BASE_URL = 'http://localhost:1337/api';
 
 export const getPeople = async () => {
   try {
-    const res = await axios.get(`${API_BASE_URL}/people?populate[photo]=true&populate[links]=true`);
+    const res = await axios.get(`${API_BASE_URL}/people?populate=*`);
     return res.data.data;
   } catch (error) {
     console.error('Error fetching people:', error);
+    return [];
+  }
+};
+export const getPublications = async () => {
+  try {
+    const res = await axios.get(`${API_BASE_URL}/publications?populate=*`);
+    return res.data.data;
+  } catch (error) {
+    console.error('Error fetching publications:', error);
     return [];
   }
 };

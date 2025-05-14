@@ -1,0 +1,32 @@
+{
+  "kind": "singleType",
+  "collectionName": "contact",
+  "info": {
+    "singularName": "contact1",
+    "pluralName": "contact",
+    "displayName": "Contact"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "intro": {
+      "type": "blocks"
+    },
+    "address": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "mapEmbedUrl": {
+      "type": "string"
+    }
+  }
+}

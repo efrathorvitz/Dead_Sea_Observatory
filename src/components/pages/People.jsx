@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../Layout';
 import { getPeople } from '../../services/api';
 import Person from './Person';
+import EntityDisplay from './EntityDisplay';
 
 const People = () => {
   const [people, setPeople] = useState([]);
@@ -30,9 +31,9 @@ const People = () => {
   return (
     <div className="container mx-auto px-4">
       <h1 className="text-3xl font-bold mb-6 text-center">People</h1>
-      <div className="flex">
+      <div>
         {people.map((person) => (
-          <Person key={person.id} person={person} />
+      <EntityDisplay key={person.key} entity={person} />
         ))}
       </div>
     </div>

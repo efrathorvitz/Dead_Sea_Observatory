@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "publications",
+  "info": {
+    "singularName": "publication",
+    "pluralName": "publications",
+    "displayName": "Publications",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "authors": {
+      "type": "text"
+    },
+    "year": {
+      "type": "integer"
+    },
+    "journal": {
+      "type": "string"
+    },
+    "volume_issue": {
+      "type": "string"
+    },
+    "pub_status": {
+      "type": "enumeration",
+      "enum": [
+        "published",
+        "under review",
+        "in press"
+      ]
+    },
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "external-links.external-links"
+    }
+  }
+}

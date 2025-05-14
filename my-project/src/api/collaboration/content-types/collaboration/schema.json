@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "collaborations",
+  "info": {
+    "singularName": "collaboration",
+    "pluralName": "collaborations",
+    "displayName": "Collaborations"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "logo": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    }
+  }
+}

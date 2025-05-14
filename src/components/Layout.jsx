@@ -3,6 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Logo from './Logo';
 import SiteOwnerInfo from './SiteOwnerInfo';
+import HeaderDemo from './HeaderDemo';
 
 const Layout = ({ children }) => {
   return (

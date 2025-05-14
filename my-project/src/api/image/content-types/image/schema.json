@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "research_areas",
+  "collectionName": "gallery",
   "info": {
-    "singularName": "research-area",
-    "pluralName": "research-areas",
-    "displayName": "Research Areas "
+    "singularName": "image",
+    "pluralName": "gallery",
+    "displayName": "Gallery"
   },
   "options": {
     "draftAndPublish": true
@@ -13,14 +13,10 @@
     "title": {
       "type": "string"
     },
-    "slug": {
-      "type": "uid",
-      "targetField": "title"
-    },
     "description": {
-      "type": "richtext"
+      "type": "blocks"
     },
-    "image": {
+    "images": {
       "allowedTypes": [
         "images",
         "files",
@@ -29,6 +25,9 @@
       ],
       "type": "media",
       "multiple": true
+    },
+    "order": {
+      "type": "integer"
     }
   }
 }

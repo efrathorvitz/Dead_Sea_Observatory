@@ -12,20 +12,21 @@ import Collaborations from './components/pages/Collaborations';
 import News from './components/pages/News';
 import Contact from './components/pages/Contact';
 import Home from './components/pages/Home';
+import CollectionDisplay from './components/pages/CollectionDisplay';
 
 
 const AppRouter = () => {
   return (
     <Layout>
       <Routes>
-        <Route path="/research" element={<Research />} />
-        <Route path="/people" element={<People />} />
-        <Route path="/publications" element={<Publications />} />
-        <Route path="/gallery" element={<Gallery />} />
-        <Route path="/video" element={<Video />} />
-        <Route path="/facilities" element={<Facilities />} />
-        <Route path="/collaborations" element={<Collaborations />} />
-        <Route path="/news" element={<News />} />
+        <Route path="/research" element={<CollectionDisplay collectionName="researchs"/>} />
+        <Route path="/people" element={<CollectionDisplay collectionName="people"/>} />
+        <Route path="/publications" element={<CollectionDisplay collectionName="publications"/>} />
+        <Route path="/gallery" element={<CollectionDisplay collectionName="gallery"/>} />
+        <Route path="/video" element={<CollectionDisplay collectionName="videos"/>} />
+        <Route path="/facilities" element={<CollectionDisplay collectionName="facilities"/>} />
+        <Route path="/collaborations" element={<CollectionDisplay collectionName="collaborations"/>} />
+        <Route path="/news" element={<CollectionDisplay collectionName="news"/>} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/" element={<Home/>} />
       </Routes>
