@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import EntityDisplay from './EntityDisplay';
+import EntityDisplay from '../EntityDisplay';
 import { getPublications } from '../../services/api';
 
 const Publications = () => {

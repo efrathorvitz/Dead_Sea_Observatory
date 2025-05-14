@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../Layout';
 import { getPeople } from '../../services/api';
 import Person from './Person';
-import EntityDisplay from './EntityDisplay';
+import EntityDisplay from '../EntityDisplay';
 
 const People = () => {
   const [people, setPeople] = useState([]);

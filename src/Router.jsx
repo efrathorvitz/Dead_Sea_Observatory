@@ -12,7 +12,7 @@ import Collaborations from './components/pages/Collaborations';
 import News from './components/pages/News';
 import Contact from './components/pages/Contact';
 import Home from './components/pages/Home';
-import CollectionDisplay from './components/pages/CollectionDisplay';
+import CollectionDisplay from './components/CollectionDisplay';
 
 
 const AppRouter = () => {
