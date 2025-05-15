@@ -11,6 +11,7 @@ const CollectionDisplay = ({ collectionName }) => {
     const fetchEntities = async () => {
       try {
         const response = await axios.get(`${baseUrl}/api/${collectionName}?populate=*`);
+        console.log("response"+response)
         setEntities(response.data.data);
       } catch (error) {
         console.error(`Error fetching ${collectionName}:`, error);
