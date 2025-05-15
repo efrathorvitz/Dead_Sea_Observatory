@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import EntityDisplay from './EntityDisplay';
 
-const baseUrl = 'https://committed-delight-2680eb60f9.strapiapp.com/';
+const baseUrl = 'https://committed-delight-2680eb60f9.strapiapp.com';
 const CollectionDisplay = ({ collectionName }) => {
   const [entities, setEntities] = useState([]);
 
