@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import EntityDisplay from './EntityDisplay';
 
+const baseUrl = 'https://committed-delight-2680eb60f9.strapiapp.com/';
 const CollectionDisplay = ({ collectionName }) => {
   const [entities, setEntities] = useState([]);
 
   useEffect(() => {
     const fetchEntities = async () => {
       try {
-        const response = await axios.get(`http://192.168.0.100:1337/api/${collectionName}?populate=*`);
+        const response = await axios.get(`${baseUrl}/api/${collectionName}?populate=*`);
         setEntities(response.data.data);
       } catch (error) {
         console.error(`Error fetching ${collectionName}:`, error);

@@ -1,7 +1,6 @@
 import React from 'react';
 
-const baseUrl = 'http://192.168.0.100:1337';
-
+const baseUrl = 'https://committed-delight-2680eb60f9.strapiapp.com/';
 const EntityDisplay = ({ entity }) => {
   if (!entity) return null;
 
