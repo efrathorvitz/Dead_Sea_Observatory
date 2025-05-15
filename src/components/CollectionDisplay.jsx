@@ -16,10 +16,9 @@ const CollectionDisplay = ({ collectionName }) => {
         console.error(`Error fetching ${collectionName}:`, error);
       }
     };
-
     fetchEntities();
   }, [collectionName]);
-
+  console.log(entities)
   return (
     <div>
       <h2>{collectionName}</h2>
