@@ -8,8 +8,9 @@ const EntityDisplay = ({ entity }) => {
   }, []);
 
   if (!entity) return null;
+  if (entity?.isFeatured === false) return null;
 
-  const hiddenFields = ['id', 'slug', 'documentId', 'order'];
+  const hiddenFields = ['id', 'slug', 'documentId', 'order','isFeatured'];
   const isHiddenKey = (key) => hiddenFields.includes(key) || key.includes('At');
 
   const renderField = (key, value) => {
