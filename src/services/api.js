@@ -1,7 +1,8 @@
 // src/api.js
 import axios from 'axios';
+const baseUrl = 'https://committed-delight-2680eb60f9.strapiapp.com';
 
-const API_BASE_URL = 'http://192.168.0.100:1337/api';
+const API_BASE_URL = `${baseUrl}/api`;
 
 export const getPeople = async () => {
   try {

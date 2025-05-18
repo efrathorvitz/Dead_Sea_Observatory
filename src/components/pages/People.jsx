@@ -33,7 +33,7 @@ const People = () => {
       <h1 className="text-3xl font-bold mb-6 text-center">People</h1>
       <div>
         {people.map((person) => (
-      <EntityDisplay key={person.key} entity={person} />
+      <Person/>
         ))}
       </div>
     </div>

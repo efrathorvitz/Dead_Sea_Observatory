@@ -1,54 +1,53 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import ImageGallery from './ImageGallery';
+import RichTextRenderer from './RichTextRenderer';
 
-const baseUrl = 'https://committed-delight-2680eb60f9.strapiapp.com/';
 const EntityDisplay = ({ entity }) => {
+  useEffect(() => {
+    import('aos').then((AOS) => AOS.init({ duration: 800 }));
+  }, []);
+
   if (!entity) return null;
 
-  const renderField = (key, value) => {
-    if (
-      !value ||
-      key === 'id' ||
-      key === 'slug' ||
-      key.includes('At') ||
-      key === 'documentId'
-    ) return null;
+  const hiddenFields = ['id', 'slug', 'documentId', 'order'];
+  const isHiddenKey = (key) => hiddenFields.includes(key) || key.includes('At');
 
-    // גלריית תמונות
-    if (key === 'image' && Array.isArray(value)) {
-      return (
-        <div key={key} className="my-4 space-y-2">
-          {value.map((image, index) => {
-            const url = image?.formats?.large?.url || image?.url;
-            return url ? (
-              <img
-                key={index}
-                src={`${baseUrl}${url}`}
-                alt={image?.name || 'Image'}
-                className="w-full max-w-md mx-auto mb-4"
-              />
-            ) : null;
-          })}
-        </div>
-      );
+  const renderField = (key, value) => {
+    if (!value || isHiddenKey(key)) return null;
+
+    if (key === 'image') {
+      if (Array.isArray(value)) {
+        return <ImageGallery key={key} images={value} />;
+      } else if (typeof value === 'object') {
+        const url = value?.formats?.large?.url || value?.url;
+        return url ? (
+          <img
+            key={key}
+            src={url}
+            alt={value?.name || 'image'}
+            className="w-full max-w-md mx-auto mb-4"
+            data-aos="fade-in"
+          />
+        ) : null;
+      }
     }
 
-    // תמונה בודדת
     if (key === 'photo' && typeof value === 'object') {
       const url = value?.formats?.large?.url || value?.url;
       return url ? (
         <img
           key={key}
-          src={`${baseUrl}${url}`}
+          src={url}
           alt={value?.name || 'photo'}
           className="w-full max-w-md mx-auto mb-4"
+          data-aos="fade-in"
         />
       ) : null;
     }
 
-    // קישורים
     if (key === 'links' && Array.isArray(value)) {
       return (
-        <div key={key} className="my-4 space-y-1">
+        <div key={key} className="my-4 space-y-1" data-aos="fade-right">
           {value.map((link) => (
             <a
               key={link.id || link.url}
@@ -64,10 +63,9 @@ const EntityDisplay = ({ entity }) => {
       );
     }
 
-    // אימייל
     if (key === 'email' && typeof value === 'string') {
       return (
-        <p key={key} className="mb-2">
+        <p key={key} className="mb-2" data-aos="fade-left">
           <a href={`mailto:${value}`} className="text-blue-600 underline hover:text-blue-800">
             {value}
           </a>
@@ -75,47 +73,33 @@ const EntityDisplay = ({ entity }) => {
       );
     }
 
-    // שדה טקסט עשיר כמו ביוגרפיה
-    if (key === 'bio' && Array.isArray(value)) {
-      return (
-        <div key={key} className="space-y-4 my-4">
-          {value.map((item, i) => {
-            if (item.type === 'paragraph') {
-              const text = item.children?.[0]?.text || '';
-              return <p key={i}>{text}</p>;
-            }
-            if (item.type === 'list') {
-              return (
-                <ol key={i} className="list-decimal list-inside">
-                  {item.children.map((li, j) => (
-                    <li key={j}>{li.children?.[0]?.text || ''}</li>
-                  ))}
-                </ol>
-              );
-            }
-            return null;
-          })}
-        </div>
-      );
+    if ((key === 'bio' || key === 'description') && Array.isArray(value)) {
+      return <RichTextRenderer key={key} value={value} />;
     }
 
-    // טקסט רגיל
     if (typeof value === 'string' || typeof value === 'number') {
       return (
-        <p key={key} className="mb-2">
+        <p key={key} className="mb-2" data-aos="fade-in">
           <strong>{key}:</strong> {value}
         </p>
       );
     }
 
-    // fallback — רק לקונסול
     console.warn(`שדה לא מזוהה "${key}":`, value);
     return null;
   };
 
+  const orderedEntries = Object.entries(entity)
+    .filter(([key]) => !isHiddenKey(key))
+    .sort((a, b) => {
+      const aOrder = entity.order ?? 0;
+      const bOrder = entity.order ?? 0;
+      return aOrder - bOrder;
+    });
+
   return (
     <div className="bg-white shadow-xl rounded-xl p-6 max-w-3xl mx-auto my-6">
-      {Object.entries(entity).map(([key, value]) => renderField(key, value))}
+      {orderedEntries.map(([key, value]) => renderField(key, value))}
     </div>
   );
 };

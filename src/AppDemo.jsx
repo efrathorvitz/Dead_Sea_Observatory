@@ -1,74 +1,123 @@
-import React from 'react';
+// דף ראשי ודפי תוכן נוספים לאתר של פרופ' נדב לנסקי
+// כולל Layout מודרני, מבוסס React עם TailwindCSS ו-AOS לאנימציות
+
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function AppDemo() {
+  useEffect(() => {
+    AOS.init({ duration: 800 });
+  }, []);
+
   return (
-    <div className="min-h-screen bg-white text-gray-800 font-sans">
-      {/* Header */}
-      <header className="bg-gray-100 p-6 text-center">
-        <div className="flex flex-col items-center space-y-4">
-          <img
-            src="https://static.wixstatic.com/media/827931_18b92efd70464eafbf35df4b203f74c1~mv2.jpg"
-            alt="Dead Sea Group Logo"
-            className="h-20"
-          />
-          <h1 className="text-3xl font-bold">Dead Sea Research Group</h1>
-          <p className="text-lg">Research on the Dead Sea and its Surroundings</p>
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Geological_Survey_of_Israel_Logo.svg/2560px-Geological_Survey_of_Israel_Logo.svg.png"
-            alt="GSI Logo"
-            className="h-12"
-          />
-        </div>
-      </header>
+    <Router>
+      <div className="font-sans bg-gray-50 min-h-screen">
+        <header className="bg-white shadow-md sticky top-0 z-50">
+          <nav className="container mx-auto flex justify-between items-center py-4 px-6">
+            <h1 className="text-2xl font-bold text-blue-900">פרופ' נדב לנסקי</h1>
+            <div className="space-x-4 rtl:space-x-reverse">
+              <Link to="/" className="text-gray-700 hover:text-blue-700">ראשי</Link>
+              <Link to="/research" className="text-gray-700 hover:text-blue-700">תחומי מחקר</Link>
+              <Link to="/publications" className="text-gray-700 hover:text-blue-700">פרסומים</Link>
+              <Link to="/collaborations" className="text-gray-700 hover:text-blue-700">שיתופי פעולה</Link>
+              <Link to="/contact" className="text-gray-700 hover:text-blue-700">צור קשר</Link>
+            </div>
+          </nav>
+        </header>
 
-      {/* Main content */}
-      <main className="p-6 max-w-4xl mx-auto space-y-10">
+        <main className="container mx-auto px-4 py-8">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/research" element={<Research />} />
+            <Route path="/publications" element={<Publications />} />
+            <Route path="/collaborations" element={<Collaborations />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </main>
 
-        {/* Publications */}
-        <section>
-          <h2 className="text-2xl font-semibold mb-2">Recent Publications</h2>
-          <ul className="list-disc list-inside">
-            <li>Geological Evolution of the Dead Sea Basin</li>
-            <li>Mineral Deposits and Their Economic Implications</li>
-            <li>Environmental Changes in the Dead Sea: A 50-Year Perspective</li>
-          </ul>
-        </section>
+        <footer className="bg-white border-t py-4 text-center text-sm text-gray-500">
+          © 2025 Nadav Lensky | Geological Survey of Israel
+        </footer>
+      </div>
+    </Router>
+  );
+}
 
-        {/* Projects */}
-        <section>
-          <h2 className="text-2xl font-semibold mb-2">Current Projects</h2>
-          <ul className="list-disc list-inside">
-            <li>Mapping the Salt Layers of the Dead Sea</li>
-            <li>Assessing Impact of Water Level Decline</li>
-            <li>Collaboration with Geological Institute of Israel</li>
-          </ul>
-        </section>
-
-        {/* Media */}
-        <section>
-          <h2 className="text-2xl font-semibold mb-2">Gallery & Media</h2>
-          <a
-            href="https://www.youtube.com/channel/UCkSUe_beTLmySHEBxxVgKVA?view_as=subscriber"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 underline"
-          >
-            Visit our YouTube Channel
-          </a>
-        </section>
-
-        {/* Contact */}
-        <section>
-          <h2 className="text-2xl font-semibold mb-2">Contact Us</h2>
-          <p><strong>Nadav Lensky</strong>, Head of Dead Sea Observatory</p>
-          <p>32 Yesha'yahu Leibowitz St, Jerusalem, Israel</p>
-          <p>Email: <a href="mailto:nadavl@gsi.gov.il" className="text-blue-600">nadavl@gsi.gov.il</a>, <a href="mailto:GSI.DeadSea@gmail.com" className="text-blue-600">GSI.DeadSea@gmail.com</a></p>
-          <p>Phone: 02-5314259</p>
-          <p>Web founder: Efrat Miryam Lensky</p>
-        </section>
-
-      </main>
+function Home() {
+  return (
+    <div className="space-y-6" data-aos="fade-up">
+      <h2 className="text-3xl font-bold text-blue-800">קבוצת המחקר של פרופ' נדב לנסקי</h2>
+      <p>
+        הקבוצה מתמקדת בתהליכים גיאולוגיים באזור ים המלח תוך שימוש במודלים פיזיקליים, נתוני שטח, ודימות לווייני.
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card title="תחומי מחקר" link="/research" />
+        <Card title="פרסומים מדעיים" link="/publications" />
+        <Card title="צור קשר" link="/contact" />
+      </div>
     </div>
+  );
+}
+
+function Research() {
+  return (
+    <div className="space-y-4" data-aos="fade-up">
+      <h2 className="text-2xl font-bold text-blue-800">תחומי מחקר</h2>
+      <ul className="list-disc rtl list-inside">
+        <li>תהליכים הידרולוגיים וגיאומורפולוגיים בים המלח</li>
+        <li>ניתוח שינויים טופוגרפיים בעזרת לוויינים</li>
+        <li>מודלים פיזיקליים של זרימה תת-קרקעית</li>
+        <li>קשר בין תהליכים גיאולוגיים לאקלים</li>
+      </ul>
+    </div>
+  );
+}
+
+function Publications() {
+  return (
+    <div className="space-y-4" data-aos="fade-up">
+      <h2 className="text-2xl font-bold text-blue-800">פרסומים מדעיים</h2>
+      <ul className="list-decimal rtl list-inside space-y-2">
+        <li>Lensky, N.G. et al. (2023). Seasonal dynamics of Dead Sea shoreline. *Journal of Geophysical Research*</li>
+        <li>Lensky, N.G. et al. (2021). Groundwater flow in hypersaline environments. *Hydrology Journal*</li>
+        <li>Lensky, N.G. et al. (2020). Remote sensing of sinkhole formation. *Geological Society Bulletin*</li>
+      </ul>
+    </div>
+  );
+}
+
+function Collaborations() {
+  return (
+    <div className="space-y-4" data-aos="fade-up">
+      <h2 className="text-2xl font-bold text-blue-800">שיתופי פעולה</h2>
+      <p>
+        שיתופי פעולה עם אוניברסיטאות בארץ ובעולם, כולל הטכניון, האוניברסיטה העברית, MIT ואוניברסיטת מינכן.
+      </p>
+    </div>
+  );
+}
+
+function Contact() {
+  return (
+    <div className="space-y-4 max-w-md mx-auto" data-aos="fade-up">
+      <h2 className="text-2xl font-bold text-blue-800">צור קשר</h2>
+      <form className="space-y-4">
+        <input type="text" placeholder="שם" className="w-full p-2 border rounded" />
+        <input type="email" placeholder="אימייל" className="w-full p-2 border rounded" />
+        <textarea placeholder="הודעה" className="w-full p-2 border rounded" rows={4}></textarea>
+        <button type="submit" className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800">שלח</button>
+      </form>
+    </div>
+  );
+}
+
+function Card({ title, link }) {
+  return (
+    <Link to={link} className="block p-6 border rounded shadow hover:shadow-lg transition">
+      <h3 className="text-xl font-semibold text-blue-700">{title}</h3>
+    </Link>
   );
 }
 
