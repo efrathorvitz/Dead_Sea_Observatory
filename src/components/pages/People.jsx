@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../Layout';
-import { getPeople } from '../../services/api';
+//import { getPeople } from '../../services/api';
 import Person from './Person';
 import EntityDisplay from '../EntityDisplay';
 
@@ -12,7 +12,7 @@ const People = () => {
   useEffect(() => {
     const fetchPeople = async () => {
       try {
-        const peopleData = await getPeople();
+        //const peopleData = await getPeople();
         setPeople(peopleData);
       } catch (err) {
         console.error(err);

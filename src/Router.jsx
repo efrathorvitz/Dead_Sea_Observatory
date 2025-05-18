@@ -13,10 +13,12 @@ import News from './components/pages/News';
 import Contact from './components/pages/Contact';
 import Home from './components/pages/Home';
 import CollectionDisplay from './components/CollectionDisplay';
+import { DataProvider } from './services/context';
 
 
 const AppRouter = () => {
   return (
+    <DataProvider>
     <Layout>
       <Routes>
         <Route path="/research" element={<CollectionDisplay collectionName="researchs"/>} />
@@ -31,6 +33,7 @@ const AppRouter = () => {
         <Route path="/" element={<Home/>} />
       </Routes>
     </Layout>
+    </DataProvider>
   );
 };
 

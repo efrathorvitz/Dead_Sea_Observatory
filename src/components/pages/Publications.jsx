@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import EntityDisplay from '../EntityDisplay';
-import { getPublications } from '../../services/api';
+//import { getPublications } from '../../services/api';
 
 const Publications = () => {
   const [publications, setPublications] = useState([]);
@@ -10,7 +10,7 @@ const Publications = () => {
   useEffect(() => {
     const fetchPublications = async () => {
       try {
-        const publicationsData = await getPublications();
+        //const publicationsData = await getPublications();
         setPublications(publicationsData);
       } catch (err) {
         console.error(err);
