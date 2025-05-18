@@ -1,37 +1,70 @@
 import React, { useState } from 'react';
-import SocialBar from './SocialBar';
+import { Link } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 
-const Header = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
+function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => setIsOpen(!isOpen);
+
+  const navLinks = [
+    { to: '/', label: 'Home' },
+    { to: '/research', label: 'Research' },
+    { to: '/people', label: 'People' },
+    { to: '/publications', label: 'Publications' },
+    { to: '/gallery', label: 'Gallery' },
+    { to: '/video', label: 'Video' },
+    { to: '/facilities', label: 'Facilities' },
+    { to: '/collaborations', label: 'Collaborations' },
+    { to: '/news', label: 'News' },
+    { to: '/contact', label: 'Contact' },
+  ];
 
   return (
-    <header className="bg-blue-600 text-white p-4 shadow-md">
-      <div className="flex items-center justify-between">
+    <header className="bg-white shadow-md sticky top-0 z-50">
+      <nav className="container mx-auto flex justify-between items-center py-4 px-6">
+        <h1 className="text-2xl font-bold text-blue-900">
+          Prof. NADAV G. LENSKY
+        </h1>
+
+        {/* Desktop links */}
+        <div className="hidden md:flex space-x-4 rtl:space-x-reverse">
+          {navLinks.map(({ to, label }) => (
+            <Link key={to} to={to} className="text-gray-700 hover:text-blue-700">
+              {label}
+            </Link>
+          ))}
+        </div>
+
+        {/* Hamburger button */}
         <button
-          className="md:hidden"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
+          className="md:hidden text-gray-700"
+          onClick={toggleMenu}
+          aria-label="Toggle Menu"
         >
-          ☰
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
-        <nav className={`w-full ${menuOpen ? 'block' : 'hidden'} md:block`}>
-          <ul className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-sm">
-            <li><a href="/" className="hover:underline">Home</a></li>
-            <li><a href="/research" className="hover:underline">Research</a></li>
-            <li><a href="/people" className="hover:underline">People</a></li>
-            <li><a href="/publications" className="hover:underline">Publications</a></li>
-            <li><a href="/gallery" className="hover:underline">Gallery</a></li>
-            <li><a href="/video" className="hover:underline">Video</a></li>
-            <li><a href="/facilities" className="hover:underline">Facilities</a></li>
-            <li><a href="/collaborations" className="hover:underline">Collaborations</a></li>
-            <li><a href="/news" className="hover:underline">News</a></li>
-            <li><a href="/contact" className="hover:underline">Contact</a></li>
-            <li><SocialBar /></li>
-          </ul>
-        </nav>
-      </div>
+      </nav>
+
+      {/* Mobile menu */}
+      {isOpen && (
+        <div className="md:hidden px-6 pb-4">
+          <div className="flex flex-col space-y-2">
+            {navLinks.map(({ to, label }) => (
+              <Link
+                key={to}
+                to={to}
+                onClick={() => setIsOpen(false)}
+                className="text-gray-700 hover:text-blue-700"
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </header>
   );
-};
+}
 
 export default Header;
