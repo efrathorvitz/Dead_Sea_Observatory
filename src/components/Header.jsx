@@ -26,7 +26,6 @@ function Header() {
         <h1 className="text-2xl font-bold text-blue-900">
           Prof. NADAV G. LENSKY
         </h1>
-
         {/* Desktop links */}
         <div className="hidden md:flex space-x-4 rtl:space-x-reverse">
           {navLinks.map(({ to, label }) => (
