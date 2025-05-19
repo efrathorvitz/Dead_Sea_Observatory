@@ -107,4 +107,4 @@ const EntityDisplay = ({ entity }) => {
   );
 };
 
-export default EntityDisplay;
+export default React.memo(EntityDisplay);
