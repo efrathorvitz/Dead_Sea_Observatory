@@ -25,7 +25,7 @@ const AppRouter = () => {
         <Route path="/people" element={<CollectionDisplay collectionName="people"/>} />
         <Route path="/publications" element={<CollectionDisplay collectionName="publications"/>} />
         <Route path="/gallery" element={<CollectionDisplay collectionName="gallery"/>} />
-        <Route path="/video" element={<CollectionDisplay collectionName="videos"/>} />
+       {/*<Route path="/video" element={<CollectionDisplay collectionName="videos"/>} /> */} 
         <Route path="/facilities" element={<CollectionDisplay collectionName="facilities"/>} />
         <Route path="/collaborations" element={<CollectionDisplay collectionName="collaborations"/>} />
         <Route path="/news" element={<CollectionDisplay collectionName="news"/>} />

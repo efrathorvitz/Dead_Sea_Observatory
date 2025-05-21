@@ -13,7 +13,7 @@ function Header() {
     { to: '/people', label: 'People' },
     { to: '/publications', label: 'Publications' },
     { to: '/gallery', label: 'Gallery' },
-    { to: '/video', label: 'Video' },
+    /*{ to: '/video', label: 'Video' },*/
     { to: '/facilities', label: 'Facilities' },
     { to: '/collaborations', label: 'Collaborations' },
     { to: '/news', label: 'News' },
