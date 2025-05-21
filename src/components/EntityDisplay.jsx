@@ -10,30 +10,40 @@ const EntityDisplay = ({ entity }) => {
   if (!entity) return null;
   if (entity?.isFeatured === false) return null;
 
-  const hiddenFields = ['id', 'slug', 'documentId', 'order','isFeatured'];
+  const hiddenFields = ['id', 'slug', 'documentId', 'order', 'isFeatured'];
   const isHiddenKey = (key) => hiddenFields.includes(key) || key.includes('At');
+
+  // מציאת תמונת photo בלבד
+  let photoImage = null;
+  let photoAlt = 'image';
+
+  if (entity?.photo?.formats?.large?.url || entity?.photo?.url) {
+    photoImage = entity.photo.formats?.large?.url || entity.photo.url;
+    photoAlt = entity.photo?.name || photoAlt;
+  }
 
   const renderField = (key, value) => {
     if (!value || isHiddenKey(key)) return null;
 
-    // תמונות
-    if (key === 'images' || key === 'image' || key === 'photo') {
+    // תמונות - למעט photo
+    if (key === 'images' || key === 'image') {
       if (Array.isArray(value)) {
         return <ImageGallery key={key} images={value} />;
       } else if (typeof value === 'object') {
         const url = value?.formats?.large?.url || value?.url;
         return url ? (
-          <img
-            key={key}
-            src={url}
-            alt={value?.name || 'image'}
-            className="w-full max-w-md mx-auto mb-4"
-            data-aos="fade-in"
-          />
+          <div className="flex-shrink-0">
+            <img
+              key={key}
+              src={url}
+              alt={value?.name || 'image'}
+              className="w-40 h-52 object-cover rounded-lg shadow-md"
+              data-aos="fade-in"
+            />
+          </div>
         ) : null;
       }
     }
-
 
     if (key === 'videoUrl' && typeof value === 'string') {
       return (
@@ -102,7 +112,26 @@ const EntityDisplay = ({ entity }) => {
 
   return (
     <div className="bg-white shadow-xl rounded-xl p-6 max-w-3xl mx-auto my-6">
-      {visibleEntries.map(([key, value]) => renderField(key, value))}
+      <div className="flex flex-col md:flex-row gap-6">
+        {/* photo בצד שמאל למעלה */}
+        {photoImage && (
+          <div className="flex-shrink-0">
+            <img
+              src={photoImage}
+              alt={photoAlt}
+              className="w-40 h-52 object-cover rounded-lg shadow-md"
+              data-aos="fade-in"
+            />
+          </div>
+        )}
+
+        {/* שאר השדות */}
+        <div className="flex-1">
+          {visibleEntries.map(([key, value]) =>
+            key === 'photo' ? null : renderField(key, value)
+          )}
+        </div>
+      </div>
     </div>
   );
 };
