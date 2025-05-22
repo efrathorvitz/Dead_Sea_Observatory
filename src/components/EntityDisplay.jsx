@@ -61,7 +61,7 @@ const EntityDisplay = ({ entity }) => {
     // קישורים
     if (key === 'links' && Array.isArray(value)) {
       return (
-        <div key={key} className="my-4 space-y-1" data-aos="fade-right">
+        <div key={key} className="break-all my-4 space-y-1" data-aos="fade-right">
           {value.map((link) => (
             <a
               key={link.id || link.url}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import SocialBar from './SocialBar'; // Import the SocialBar component
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,10 +23,11 @@ function Header() {
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
-      <nav className="container mx-auto flex justify-between items-center py-4 px-6">
+      <nav className="container mx-auto flex flex-wrap justify-between items-center py-4 px-6">
         <h1 className="text-2xl font-bold text-blue-900">
           Prof. NADAV G. LENSKY
         </h1>
+
         {/* Desktop links */}
         <div className="hidden md:flex space-x-4 rtl:space-x-reverse">
           {navLinks.map(({ to, label }) => (
@@ -33,6 +35,11 @@ function Header() {
               {label}
             </Link>
           ))}
+        </div>
+
+        {/* SocialBar */}
+        <div className="hidden md:flex">
+          <SocialBar />
         </div>
 
         {/* Hamburger button */}
@@ -43,25 +50,29 @@ function Header() {
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
-      </nav>
 
-      {/* Mobile menu */}
-      {isOpen && (
-        <div className="md:hidden px-6 pb-4">
-          <div className="flex flex-col space-y-2">
-            {navLinks.map(({ to, label }) => (
-              <Link
-                key={to}
-                to={to}
-                onClick={() => setIsOpen(false)}
-                className="text-gray-700 hover:text-blue-700"
-              >
-                {label}
-              </Link>
-            ))}
+        {/* Mobile menu */}
+        {isOpen && (
+          <div className="w-full md:hidden px-6 pb-4">
+            <div className="flex flex-col space-y-2">
+              {navLinks.map(({ to, label }) => (
+                <Link
+                  key={to}
+                  to={to}
+                  onClick={() => setIsOpen(false)}
+                  className="text-gray-700 hover:text-blue-700"
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
+            {/* SocialBar for mobile */}
+            <div className="mt-4">
+              <SocialBar />
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </nav>
     </header>
   );
 }
