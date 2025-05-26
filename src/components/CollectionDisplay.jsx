@@ -23,7 +23,12 @@ const CollectionDisplay = ({ collectionName }) => {
     return <div className="text-red-500 text-center">{error[collectionName]}</div>;
   }
 
-  const data = entities[collectionName] || [];
+  const data = (entities[collectionName] || []).slice().sort((a, b) => {
+    if (a.order !== undefined && b.order !== undefined) {
+      return a.order - b.order;
+    }
+    return 0;
+  });
 
   return (
     <div>
