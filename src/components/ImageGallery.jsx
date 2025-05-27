@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 const ImageGallery = ({ images }) => {
+  const scrollContainerRef = useRef(null);
+
   if (!images?.length) return null;
 
   const scroll = (dir) => {
-    const container = document.getElementById('image-scroll-container');
-    container.scrollBy({ left: dir * 300, behavior: 'smooth' });
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: dir * 300, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -19,7 +22,7 @@ const ImageGallery = ({ images }) => {
         </button>
 
         <div
-          id="image-scroll-container"
+          ref={scrollContainerRef}
           className="flex overflow-x-auto space-x-4 px-10 scroll-smooth"
         >
           {images.map((image, index) => {
@@ -49,3 +52,5 @@ const ImageGallery = ({ images }) => {
 };
 
 export default ImageGallery;
+// This component renders a horizontal image gallery with smooth scrolling.
+// It uses a ref to manage the scroll container and provides left/right buttons for navigation.
