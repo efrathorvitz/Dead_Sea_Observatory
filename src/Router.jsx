@@ -14,25 +14,27 @@ import Contact from './components/pages/Contact';
 import Home from './components/pages/Home';
 import CollectionDisplay from './components/CollectionDisplay';
 import { DataProvider } from './services/context';
+import ScrollToTop from './components/ScrollToTop';
 
 
 const AppRouter = () => {
   return (
     <DataProvider>
-    <Layout>
-      <Routes>
-        <Route path="/research" element={<CollectionDisplay collectionName="researchs"/>} />
-        <Route path="/people" element={<CollectionDisplay collectionName="people"/>} />
-        <Route path="/publications" element={<CollectionDisplay collectionName="publications"/>} />
-        <Route path="/gallery" element={<CollectionDisplay collectionName="gallery"/>} />
-       {/*<Route path="/video" element={<CollectionDisplay collectionName="videos"/>} /> */} 
-        <Route path="/facilities" element={<CollectionDisplay collectionName="facilities"/>} />
-        <Route path="/collaborations" element={<CollectionDisplay collectionName="collaborations"/>} />
-        <Route path="/news" element={<CollectionDisplay collectionName="news"/>} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/" element={<Home/>} />
-      </Routes>
-    </Layout>
+      <ScrollToTop />
+      <Layout>
+        <Routes>
+          <Route path="/research" element={<CollectionDisplay collectionName="researchs"/>} />
+          <Route path="/people" element={<CollectionDisplay collectionName="people"/>} />
+          <Route path="/publications" element={<CollectionDisplay collectionName="publications"/>} />
+          <Route path="/gallery" element={<CollectionDisplay collectionName="gallery"/>} />
+         {/*<Route path="/video" element={<CollectionDisplay collectionName="videos"/>} /> */} 
+          <Route path="/facilities" element={<CollectionDisplay collectionName="facilities"/>} />
+          <Route path="/collaborations" element={<CollectionDisplay collectionName="collaborations"/>} />
+          <Route path="/news" element={<CollectionDisplay collectionName="news"/>} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/" element={<Home/>} />
+        </Routes>
+      </Layout>
     </DataProvider>
   );
 };
