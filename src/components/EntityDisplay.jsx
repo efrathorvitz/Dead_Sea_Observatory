@@ -3,10 +3,6 @@ import ImageGallery from './ImageGallery';
 import RichTextRenderer from './RichTextRenderer';
 
 const EntityDisplay = ({ entity }) => {
-  useEffect(() => {
-    import('aos').then((AOS) => AOS.init({ duration: 800 }));
-  }, []);
-
   if (!entity) return null;
   if (entity?.isFeatured === false) return null;
 
@@ -128,7 +124,11 @@ const EntityDisplay = ({ entity }) => {
         {/* שאר השדות */}
         <div className="flex-1">
           {visibleEntries.map(([key, value]) =>
-            key === 'photo' ? null : renderField(key, value)
+            key === 'photo' ? null : (
+              <React.Fragment key={key}>
+                {renderField(key, value)}
+              </React.Fragment>
+            )
           )}
         </div>
       </div>

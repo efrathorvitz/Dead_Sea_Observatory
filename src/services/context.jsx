@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useCallback
 } from 'react';
-import { fetchEntities } from './api';
+import {fetchFromFirestore} from './api';
 
 const DataContext = createContext();
 
@@ -26,7 +26,7 @@ export const DataProvider = ({ children }) => {
     setLoading((prev) => ({ ...prev, [collectionName]: true }));
 
     try {
-      const data = await fetchEntities(collectionName);
+      const data = await fetchFromFirestore(collectionName);
       cacheRef.current[collectionName] = data;
       setEntities((prev) => ({ ...prev, [collectionName]: data }));
     } catch (err) {
