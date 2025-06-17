@@ -11,6 +11,7 @@ import Facilities from './components/pages/Facilities';
 import Collaborations from './components/pages/Collaborations';
 import News from './components/pages/News';
 import Contact from './components/pages/Contact';
+import FetchContent from './components/FetchContent';
 import Home from './components/pages/Home';
 import CollectionDisplay from './components/CollectionDisplay';
 import { DataProvider } from './services/context';
@@ -32,6 +33,7 @@ const AppRouter = () => {
           <Route path="/collaborations" element={<CollectionDisplay collectionName="collaborations"/>} />
           <Route path="/news" element={<CollectionDisplay collectionName="news"/>} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/fetch" element={<FetchContent />} />
           <Route path="/" element={<Home/>} />
         </Routes>
       </Layout>
