@@ -6,7 +6,10 @@ import React, {
   useMemo,
   useCallback
 } from 'react';
-import {fetchFromFirestore} from './api';
+import {
+  fetchFromFirestore,
+  reconstructObjectInOrder
+} from './api';
 
 const DataContext = createContext();
 
@@ -26,13 +29,27 @@ export const DataProvider = ({ children }) => {
     setLoading((prev) => ({ ...prev, [collectionName]: true }));
 
     try {
-      const data = await fetchFromFirestore(collectionName);
-      cacheRef.current[collectionName] = data;
-      setEntities((prev) => ({ ...prev, [collectionName]: data }));
+      const rawData = await fetchFromFirestore(collectionName);
+
+      const reconstructedData = rawData.map(entry =>
+        entry.orderedFields ? reconstructObjectInOrder(entry) : entry
+      );
+
+      cacheRef.current[collectionName] = reconstructedData;
+      setEntities((prev) => ({
+        ...prev,
+        [collectionName]: reconstructedData
+      }));
     } catch (err) {
-      setError((prev) => ({ ...prev, [collectionName]: 'Error fetching data' }));
+      setError((prev) => ({
+        ...prev,
+        [collectionName]: 'Error fetching data'
+      }));
     } finally {
-      setLoading((prev) => ({ ...prev, [collectionName]: false }));
+      setLoading((prev) => ({
+        ...prev,
+        [collectionName]: false
+      }));
     }
   }, []);
 
