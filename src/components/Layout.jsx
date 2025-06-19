@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
       <div className="sticky top-0 z-50 bg-white shadow">
         <Header/>
       </div>
-      <main className="container mx-auto px-4 py-8">{children}</main>
+      <main className="container mx-auto px-4 py-7">{children}</main>
       {/*<main className="flex-grow container mx-auto px-4 py-6">
         {children}
       </main>*/}
