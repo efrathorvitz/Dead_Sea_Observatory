@@ -1,3 +1,4 @@
+// src/services/api.js
 import axios from 'axios';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db, auth } from './firebase';
@@ -17,12 +18,30 @@ async function login() {
 export const fetchEntitiesToFirestore = async (collectionName) => {
   try {
     await login();
-
     console.log(`📥 Fetching ${collectionName} from API`);
-    const response = await axios.get(`${baseUrl}/api/${collectionName}?populate=*`);
-    const dataFromStrapi = response.data.data;
 
-    const preparedData = dataFromStrapi.map(entry => {
+    let allData = [];
+    let page = 1;
+    let pageCount = 1;
+
+    do {
+      const response = await axios.get(`${baseUrl}/api/${collectionName}`, {
+        params: {
+          populate: '*',
+          'pagination[page]': page,
+          'pagination[pageSize]': 100
+        }
+      });
+
+      const dataFromStrapi = response.data.data;
+      allData.push(...dataFromStrapi);
+
+      pageCount = response.data.meta.pagination.pageCount;
+      page++;
+
+    } while (page <= pageCount);
+
+    const preparedData = allData.map(entry => {
       const orderedKeys = Object.keys(entry);
       return {
         orderedFields: orderedKeys,

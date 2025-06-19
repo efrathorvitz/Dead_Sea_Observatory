@@ -15,7 +15,9 @@ const Layout = ({ children }) => {
       {/*<main className="flex-grow container mx-auto px-4 py-6">
         {children}
       </main>*/}
-      <Footer />
+      <div className="sticky bottom-0 z-50 bg-white shadow">
+        <Footer />
+      </div>
     </div>
   );
 };

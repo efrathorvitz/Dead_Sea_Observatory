@@ -23,12 +23,18 @@ const CollectionDisplay = ({ collectionName }) => {
     return <div className="text-red-500 text-center">{error[collectionName]}</div>;
   }
 
-  const data = (entities[collectionName] || []).slice().sort((a, b) => {
-    if (a.order !== undefined && b.order !== undefined) {
-      return a.order - b.order;
-    }
-    return 0;
-  });
+const data = (entities[collectionName] || []).slice().sort((a, b) => {
+  const yearA = a.values?.year ?? 0;
+  const yearB = b.values?.year ?? 0;
+  const orderA = a.values?.order ?? Number.MAX_SAFE_INTEGER;
+  const orderB = b.values?.order ?? Number.MAX_SAFE_INTEGER;
+
+  if (yearA !== yearB) {
+    return yearB - yearA; // מיון לפי year מהחדש לישן
+  }
+
+  return orderA - orderB; // מיון לפי order מהנמוך לגבוה
+});
 
   return (
     <div>
