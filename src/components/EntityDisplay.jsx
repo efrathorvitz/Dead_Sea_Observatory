@@ -150,7 +150,7 @@ const EntityDisplay = ({ entity }) => {
           {visibleEntries.map(([key, value]) =>
             key === 'photo' ? null : (
               <React.Fragment key={key}>
-                {renderField(key, value)}
+                {renderField(key, value)}  
               </React.Fragment>
             )
           )}
