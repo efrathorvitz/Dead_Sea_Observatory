@@ -21,6 +21,15 @@ const EntityDisplay = ({ entity }) => {
   const renderField = (key, value) => {
     if (!value || isHiddenKey(key)) return null;
 
+    // תצוגה מיוחדת ל-title בתור כותרת
+    if (key === 'title') {
+      return (
+        <p key={key} className="text-2xl font-bold text-center mb-4" data-aos="fade-in">
+          {value}
+        </p>
+      );
+    }
+
     // תמונות - למעט photo
     if (key === 'images' || key === 'image') {
       if (Array.isArray(value)) {
@@ -94,7 +103,7 @@ const EntityDisplay = ({ entity }) => {
     if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
       return (
         <p key={key} className="mb-2" data-aos="fade-in">
-          <strong>{key}:</strong> {String(value)}
+          {String(value)}
         </p>
       );
     }
