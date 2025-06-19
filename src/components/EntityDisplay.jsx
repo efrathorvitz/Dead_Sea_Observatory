@@ -29,6 +29,21 @@ const EntityDisplay = ({ entity }) => {
         </p>
       );
     }
+    if (key === 'name') {
+      return (
+        <p key={key} className="text-xl font-semibold text-center mb-2" data-aos="fade-in">
+          {value}
+        </p>
+      );
+    }
+
+    if (key === 'position') {
+      return (
+        <p key={key} className="text-center italic text-gray-700 mb-4" data-aos="fade-in">
+          {value}
+        </p>
+      );
+    }
 
     // תמונות - למעט photo
     if (key === 'images' || key === 'image') {
