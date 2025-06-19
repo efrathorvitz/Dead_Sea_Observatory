@@ -24,16 +24,16 @@ const CollectionDisplay = ({ collectionName }) => {
   }
 
 const data = (entities[collectionName] || []).slice().sort((a, b) => {
-  const yearA = a.values?.year ?? 0;
-  const yearB = b.values?.year ?? 0;
-  const orderA = a.values?.order ?? Number.MAX_SAFE_INTEGER;
-  const orderB = b.values?.order ?? Number.MAX_SAFE_INTEGER;
+  const yearA = a?.year ?? 0;
+  const yearB = b?.year ?? 0;
+  const orderA = a?.order ?? Number.MAX_SAFE_INTEGER;
+  const orderB = b?.order ?? Number.MAX_SAFE_INTEGER;
 
   if (yearA !== yearB) {
-    return yearB - yearA; // מיון לפי year מהחדש לישן
+    return yearB - yearA; 
   }
 
-  return orderA - orderB; // מיון לפי order מהנמוך לגבוה
+  return orderA - orderB; 
 });
 
   return (
