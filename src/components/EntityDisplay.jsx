@@ -12,11 +12,24 @@ const EntityDisplay = ({ entity }) => {
   // מציאת תמונת photo בלבד
   let photoImage = null;
   let photoAlt = 'image';
+  const [imgRefreshKey, setImgRefreshKey] = React.useState(0);
+  const [imgError, setImgError] = React.useState(false);
 
   if (entity?.photo?.formats?.large?.url || entity?.photo?.url) {
     photoImage = entity.photo.formats?.large?.url || entity.photo.url;
     photoAlt = entity.photo?.name || photoAlt;
   }
+
+  // רענון אוטומטי אם התמונה לא נטענת
+  React.useEffect(() => {
+    if (imgError && imgRefreshKey < 2) {
+      const timeout = setTimeout(() => {
+        setImgRefreshKey((prev) => prev + 1);
+        setImgError(false);
+      }, 500); // רענון אוטומטי אחרי חצי שניה
+      return () => clearTimeout(timeout);
+    }
+  }, [imgError, imgRefreshKey]);
 
   const renderField = (key, value) => {
     if (!value || isHiddenKey(key)) return null;
@@ -137,7 +150,8 @@ const EntityDisplay = ({ entity }) => {
         {photoImage && (
           <div className="flex-shrink-0">
             <img
-              src={photoImage}
+              key={imgRefreshKey}
+              src={photoImage + '?v=' + imgRefreshKey}
               alt={photoAlt}
               className="w-40 h-52 object-cover rounded-lg shadow-md"
               data-aos="fade-in"
