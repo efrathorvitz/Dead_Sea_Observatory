@@ -44,7 +44,7 @@ export const fetchEntitiesToFirestore = async (collectionName) => {
     const preparedData = allData.map(entry => {
       const orderedKeys = Object.keys(entry);
       const values = JSON.parse(JSON.stringify(entry));
-
+console.log('Prepared Entry:', { orderedKeys, values });
       return {
         orderedFields: orderedKeys,
         values: values
