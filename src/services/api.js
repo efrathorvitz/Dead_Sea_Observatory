@@ -38,14 +38,16 @@ export const fetchEntitiesToFirestore = async (collectionName) => {
 
       pageCount = response.data.meta.pagination.pageCount;
       page++;
-
     } while (page <= pageCount);
 
+    // המרה ל-JSON כדי לשמור nested objects בצורה תקינה
     const preparedData = allData.map(entry => {
       const orderedKeys = Object.keys(entry);
+      const values = JSON.parse(JSON.stringify(entry));
+
       return {
         orderedFields: orderedKeys,
-        values: entry
+        values: values
       };
     });
 
@@ -70,7 +72,7 @@ export const fetchFromFirestore = async (collectionName) => {
 
     if (docSnap.exists()) {
       console.log(`📖 Fetched ${collectionName} from Firestore`);
-      return docSnap.data().data; 
+      return docSnap.data().data;
     } else {
       console.warn(`⚠️ No data found for ${collectionName}`);
       return null;
