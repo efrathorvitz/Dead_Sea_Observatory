@@ -1,143 +1,35 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ImageGallery from './ImageGallery';
 import RichTextRenderer from './RichTextRenderer';
+import { getFullImageUrl } from '../utils/getFullImageUrl';
 
 const EntityDisplay = ({ entity }) => {
   if (!entity) return null;
-  if (entity?.isFeatured === false) return null;
 
   const hiddenFields = ['id', 'slug', 'documentId', 'order', 'isFeatured'];
   const isHiddenKey = (key) => hiddenFields.includes(key) || key.includes('At');
 
-  // מציאת תמונת photo בלבד
-  let photoImage = null;
-  let photoAlt = 'image';
-  const [imgRefreshKey, setImgRefreshKey] = React.useState(0);
-  const [imgError, setImgError] = React.useState(false);
-
-  if (entity?.photo?.formats?.large?.url || entity?.photo?.url) {
-    photoImage = entity.photo.formats?.large?.url || entity.photo.url;
-    photoAlt = entity.photo?.name || photoAlt;
-  }
-
-  // רענון אוטומטי אם התמונה לא נטענת
-  React.useEffect(() => {
-    if (imgError && imgRefreshKey < 2) {
-      const timeout = setTimeout(() => {
-        setImgRefreshKey((prev) => prev + 1);
-        setImgError(false);
-      }, 500); // רענון אוטומטי אחרי חצי שניה
-      return () => clearTimeout(timeout);
-    }
-  }, [imgError, imgRefreshKey]);
+  const photoImage = getFullImageUrl(entity.photo);
+  const photoAlt = entity.photo?.name || 'image';
 
   const renderField = (key, value) => {
     if (!value || isHiddenKey(key)) return null;
 
-    // תצוגה מיוחדת ל-title בתור כותרת
-    if (key === 'title') {
-      return (
-        <p key={key} className="text-2xl font-bold text-center mb-4" data-aos="fade-in">
-          {value}
-        </p>
-      );
-    }
-    if (key === 'name') {
-      return (
-        <p key={key} className="text-xl font-semibold text-center mb-2" data-aos="fade-in">
-          {value}
-        </p>
-      );
-    }
+    if (key === 'title') return <p key={key} className="text-2xl font-bold text-center mb-4">{value}</p>;
+    if (key === 'name') return <p key={key} className="text-xl font-semibold text-center mb-2">{value}</p>;
+    if (key === 'position') return <p key={key} className="text-center italic text-gray-700 mb-4">{value}</p>;
 
-    if (key === 'position') {
-      return (
-        <p key={key} className="text-center italic text-gray-700 mb-4" data-aos="fade-in">
-          {value}
-        </p>
-      );
-    }
-
-    // תמונות - למעט photo
     if (key === 'images' || key === 'image') {
-      if (Array.isArray(value)) {
-        return <ImageGallery key={key} images={value} />;
-      } else if (typeof value === 'object') {
-        const url = value?.formats?.large?.url || value?.url;
-        return url ? (
-          <div className="flex-shrink-0">
-            <img
-              key={key}
-              src={url}
-              alt={value?.name || 'image'}
-              className="w-40 h-52 object-cover rounded-lg shadow-md"
-              data-aos="fade-in"
-            />
-          </div>
-        ) : null;
-      }
+      return Array.isArray(value) ? <ImageGallery key={key} images={value} /> : null;
     }
 
-    if (key === 'videoUrl' && typeof value === 'string') {
-      return (
-        <div key={key} className="my-4" data-aos="fade-in">
-          <iframe
-            src={value}
-            title="Video"
-            className="w-full aspect-video rounded-lg shadow-md"
-            allowFullScreen
-          />
-        </div>
-      );
-    }
-
-    // קישורים
-    if (key === 'links' && Array.isArray(value)) {
-      return (
-        <div key={key} className="break-all my-4 space-y-1" data-aos="fade-right">
-          {value.map((link) => (
-            <a
-              key={link.id || link.url}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-blue-600 underline hover:text-blue-800"
-            >
-              {link.label || link.url}
-            </a>
-          ))}
-        </div>
-      );
-    }
-
-    // אימייל
-    if (key === 'email' && typeof value === 'string') {
-      return (
-        <p key={key} className="mb-2" data-aos="fade-left">
-          <a href={`mailto:${value}`} className="text-blue-600 underline hover:text-blue-800">
-            {value}
-          </a>
-        </p>
-      );
-    }
-
-    // טקסט עשיר
     const richTextFields = ['bio', 'description', 'summary', 'content'];
-    if (richTextFields.includes(key) && Array.isArray(value)) {
-      return <RichTextRenderer key={key} value={value} />;
-    }
+    if (richTextFields.includes(key) && Array.isArray(value)) return <RichTextRenderer key={key} value={value} />;
 
-    // טקסט רגיל
     if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
-      return (
-        <p key={key} className="mb-2" data-aos="fade-in">
-          {String(value)}
-        </p>
-      );
+      return <p key={key} className="mb-2">{String(value)}</p>;
     }
 
-    // שדה לא מזוהה
-    console.warn(`שדה לא מזוהה "${key}":`, value);
     return null;
   };
 
@@ -146,28 +38,13 @@ const EntityDisplay = ({ entity }) => {
   return (
     <div className="bg-white shadow-xl rounded-xl p-6 max-w-3xl mx-auto my-6">
       <div className="flex flex-col md:flex-row gap-6">
-        {/* photo בצד שמאל למעלה */}
         {photoImage && (
           <div className="flex-shrink-0">
-            <img
-              key={imgRefreshKey}
-              src={photoImage + '?v=' + imgRefreshKey}
-              alt={photoAlt}
-              className="w-40 h-52 object-cover rounded-lg shadow-md"
-              data-aos="fade-in"
-            />
+            <img src={photoImage} alt={photoAlt} className="w-40 h-52 object-cover rounded-lg shadow-md" />
           </div>
         )}
-
-        {/* שאר השדות */}
         <div className="flex-1">
-          {visibleEntries.map(([key, value]) =>
-            key === 'photo' ? null : (
-              <React.Fragment key={key}>
-                {renderField(key, value)}  
-              </React.Fragment>
-            )
-          )}
+          {visibleEntries.map(([key, value]) => key === 'photo' ? null : renderField(key, value))}
         </div>
       </div>
     </div>

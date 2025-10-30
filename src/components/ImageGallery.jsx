@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { getFullImageUrl } from '../utils/getFullImageUrl';
 
 const ImageGallery = ({ images }) => {
   const scrollContainerRef = useRef(null);
@@ -26,7 +27,7 @@ const ImageGallery = ({ images }) => {
           className="flex overflow-x-auto space-x-4 px-10 scroll-smooth"
         >
           {images.map((image, index) => {
-            const url = image?.formats?.large?.url || image?.url;
+            const url = getFullImageUrl(image);
             return url ? (
               <img
                 key={index}
