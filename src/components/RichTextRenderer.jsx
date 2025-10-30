@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { getFullImageUrl } from '../utils/getFullImageUrl';
 const RichTextRenderer = ({ value }) => {
   const renderChildren = (children) => {
     return children.map((child, i) => {
@@ -89,7 +89,7 @@ const RichTextRenderer = ({ value }) => {
 
       case 'image': {
         const img = item.image;
-        const url = img?.formats?.medium?.url || img?.formats?.small?.url || img?.url;
+        const url = getFullImageUrl(img);
         if (!url) return null;
 
         return (
