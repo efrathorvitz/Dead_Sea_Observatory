@@ -32,8 +32,7 @@ export const fetchEntitiesToFirestore = async (collectionName) => {
           'pagination[pageSize]': 100
         }
       });
-  console.log(`📥 Page ${page} raw data from Strapi:`, JSON.stringify(dataFromStrapi, null, 2));
-
+      console.log('API Response:', response);
       const dataFromStrapi = response.data.data;
       allData.push(...dataFromStrapi);
 
